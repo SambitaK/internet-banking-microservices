@@ -28,6 +28,7 @@ Thumbs.db
 *.log
 *.logs
 application-local.properties
+application.properties
 
 # Database
 *.db
