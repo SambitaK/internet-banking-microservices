@@ -2,7 +2,7 @@
 
 A backend system for an Internet Banking application, built using Spring Boot microservices architecture.
 
-## Architecture Overview
+## Overview
 
 This project is being developed step-by-step to understand how different services find each other, share configuration from one place, and communicate with one another.
 
@@ -24,45 +24,25 @@ This project is being developed step-by-step to understand how different service
    - MySQL database integration
    - Business logic validation
 
+4. **User Service** - Port 8083
+   - User registration and management
+   - MySQL database integration
+   - **OpenFeign client integration**
+   - **Inter-service communication with Core Banking Service**
+   - Automatic bank account creation during user registration
+   - Duplicate username/email validation
+
+
 ### Work in Progress
 
 Upcoming additions include:
 
-4. **API Gateway** - Port 8082 (Planned)
+5. **API Gateway** - Port 8082
    - Single entry point for all services
 
-5. **User Service** - Port 8083 (Planned)
-   - User registration and authentication
-   - User profile management
-
-6. **Fund Transfer Service** - Port 8084 (Planned)
+6. **Fund Transfer Service** - Port 8084
    - Inter-account fund transfers
    - Transfer history and tracking
-
-   ## Project Structure
-   ```
-   internet-banking-microservices/
-   ├── service-registry/
-   │   ├── src/
-   │   └── pom.xml
-   ├── config-server/
-   │   ├── src/
-   │   │   └── main/
-   │   │       └── resources/
-   │   │           └── config/
-   │   │               ├── service-registry.properties
-   │   │               └── user-service.properties
-   │   └── pom.xml
-   ├── core-banking-service/
-   │   ├── src/
-   │   │   └── main/
-   │   │       └── java/com/banking/core_banking_service/
-   │   │           ├── entity/
-   │   │           ├── repository/
-   │   │           ├── service/
-   │   │           └── controller/
-   │   └── pom.xml
-   └── README.md
    ```
 
 ## Technology Stack
@@ -81,6 +61,8 @@ Upcoming additions include:
 - Spring Cloud Netflix Eureka (Server & Client)
 - Spring Data JPA
 - MySQL Connector
+- Spring Cloud OpenFeign
+- Spring Cloud Gateway
 
 ## API Endpoints
 
@@ -109,6 +91,23 @@ POST http://localhost:8092/api/accounts/{accountNumber}/deposit
 #### Withdraw Money
 ```http
 POST http://localhost:8092/api/accounts/{accountNumber}/withdraw
+```
+
+### User Service (Port 8083)
+
+#### Register User (Creates user + bank account automatically)
+```http
+POST http://localhost:8083/api/users/register
+```
+
+#### Get All Users
+```http
+GET http://localhost:8083/api/users
+```
+
+#### Get User by ID
+```http
+GET http://localhost:8083/api/users/{id}
 ```
 
 ## Author
