@@ -28,7 +28,9 @@ Thumbs.db
 *.log
 *.logs
 application-local.properties
-application.properties
+
+# Ignore application.properties of all microservices
+**/src/main/resources/application.properties
 
 # Database
 *.db
