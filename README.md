@@ -32,13 +32,19 @@ This project is being developed step-by-step to understand how different service
    - Automatic bank account creation during user registration
    - Duplicate username/email validation
 
+5. **API Gateway** - Port 8082
+   - Single entry point for all microservices
+   - Reactive routing with Spring Cloud Gateway (WebFlux)
+   - Automatic service discovery via Eureka
+   - Routes:
+      - `/user-service/**` → User Service (8083)
+      - `/core-banking-service/**` → Core Banking Service (8092)
+   - Runs on Netty (reactive server)
+
 
 ### Work in Progress
 
 Upcoming additions include:
-
-5. **API Gateway** - Port 8082
-   - Single entry point for all services
 
 6. **Fund Transfer Service** - Port 8084
    - Inter-account fund transfers
@@ -109,6 +115,26 @@ GET http://localhost:8083/api/users
 ```http
 GET http://localhost:8083/api/users/{id}
 ```
+
+### API Gateway (Port 8082) - Unified Entry Point
+
+**All services are accessible through the API Gateway:**
+
+#### Register User via Gateway
+```http
+POST http://localhost:8082/user-service/api/users/register
+```
+
+#### Get All Accounts via Gateway
+```http
+GET http://localhost:8082/core-banking-service/api/accounts
+```
+
+#### Deposit via Gateway
+```http
+POST http://localhost:8082/core-banking-service/api/accounts/{accountNumber}/deposit
+```
+
 
 ## Author
 
