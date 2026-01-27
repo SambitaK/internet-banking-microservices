@@ -6,9 +6,14 @@ A backend system for an Internet Banking application, built using Spring Boot mi
 
 This project is being developed step-by-step to understand how different services find each other, share configuration from one place, and communicate with one another.
 
-## Current Status:-
+## Reference
 
-### Completed Microservices
+This project references the architecture from [Internet Banking Concept Microservices](https://github.com/JavatoDev-com/internet-banking-concept-microservices).
+
+### Key Differences from Reference
+While the reference project uses Keycloak, RabbitMQ, Docker, and Kubernetes, this implementation focuses on core microservices patterns using a simplified tech stack.
+
+## Completed Microservices
 
 1. **Service Registry (Eureka Server)** - Port 8081
    - Eureka Server for service discovery and registration.
@@ -41,14 +46,13 @@ This project is being developed step-by-step to understand how different service
       - `/core-banking-service/**` → Core Banking Service (8092)
    - Runs on Netty (reactive server)
 
-
-### Work in Progress
-
-Upcoming additions include:
-
 6. **Fund Transfer Service** - Port 8084
    - Inter-account fund transfers
    - Transfer history and tracking
+   - Transfer status tracking (SUCCESS/FAILED)
+   - MySQL database: `fund_transfer_db`
+   - Account validation before transfer
+   - Unique transaction reference numbers
    
 
 ## Technology Stack
@@ -135,6 +139,28 @@ GET http://localhost:8082/core-banking-service/api/accounts
 POST http://localhost:8082/core-banking-service/api/accounts/{accountNumber}/deposit
 ```
 
+### Fund Transfer Service (Direct: 8084 | Via Gateway: 8082)
+
+#### Initiate Fund Transfer
+```http
+POST http://localhost:8082/fund-transfer-service/api/transfers
+```
+
+#### Get All Transfers
+```http
+GET http://localhost:8082/fund-transfer-service/api/transfers
+```
+
+#### Get Transfer by Reference Number
+```http
+GET http://localhost:8082/fund-transfer-service/api/transfers/reference/TXN-xxxxx
+```
+
+#### Get Transfers by Account Number
+```http
+GET http://localhost:8082/fund-transfer-service/api/transfers/account/ACCNO.
+```
+
 
 ## Author
 
@@ -142,5 +168,3 @@ POST http://localhost:8082/core-banking-service/api/accounts/{accountNumber}/dep
 - **Email**: somyasambita11@gmail.com
 
 ---
-
-**Note**: This project is under active development. More microservices and features will be added progressively.
